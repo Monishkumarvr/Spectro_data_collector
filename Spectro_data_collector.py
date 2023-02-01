@@ -24,23 +24,23 @@ gd.configure_default_column(editable = True, groupable = True)
 gridoptions = gd.build()
 
 formatter = {
-    'Item Name': ('Item Name', {'width': 80}),
-    'Type': ('Type', {'width': 50}),
+    'Item Name': ('Item Name', {'width': 80, 'editable': True}),
+    'Type': ('Type', {'width': 50, 'editable': True}),
     # 'Metal RR': ('Metal RR', {'width': 40}),
     # 'Min': ('Min', {'width': 30}),
     # 'Max': ('Max', {'width': 30}),
-    'C': ('C', {'width': 30}),
-    'Si': ('Si', {'width': 30}),
-    'Mn': ('Mn', {'width': 30}),
-    'S': ('S', {'width': 30}),
-    'P': ('P', {'width': 30}),
-    'Mg': ('Mg', {'width': 30}),
-    'Cr': ('Cr', {'width': 30}),
-    'Cu': ('Cu', {'width': 30}),
-    'Ni': ('Ni', {'width': 30}),
-    'Al': ('Al', {'width': 30}),
-    'Ti': ('Ti', {'width': 30}),
-    'Mo': ('Mo', {'width': 30}),
+    'C': ('C', {'width': 30, 'editable': True}),
+    'Si': ('Si', {'width': 30, 'editable': True}),
+    'Mn': ('Mn', {'width': 30, 'editable': True}),
+    'S': ('S', {'width': 30, 'editable': True}),
+    'P': ('P', {'width': 30, 'editable': True}),
+    'Mg': ('Mg', {'width': 30, 'editable': True}),
+    'Cr': ('Cr', {'width': 30, 'editable': True}),
+    'Cu': ('Cu', {'width': 30, 'editable': True}),
+    'Ni': ('Ni', {'width': 30, 'editable': True}),
+    'Al': ('Al', {'width': 30, 'editable': True}),
+    'Ti': ('Ti', {'width': 30, 'editable': True}),
+    'Mo': ('Mo', {'width': 30, 'editable': True}),
 }
 
 st.write('## Items Selection list')
@@ -50,8 +50,7 @@ grid_table = draw_grid(
     fit_columns=True,
     selection='multiple',  # or 'single', or None
     use_checkbox='True',  # or False by default
-    max_height=300,
-    grid_options= gridoptions
+    max_height=300
 )
 
 
