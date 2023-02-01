@@ -50,7 +50,8 @@ grid_table = draw_grid(
     fit_columns=True,
     selection='multiple',  # or 'single', or None
     use_checkbox='True',  # or False by default
-    max_height=300
+    max_height=300,
+    grid_options= gridoptions
 )
 
 
