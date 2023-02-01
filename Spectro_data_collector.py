@@ -40,7 +40,15 @@ st.dataframe(selected_row)
 
 final_df = pd.DataFrame(selected_row)
 
-if st.button('Download Items CSV'):
-    final_df.to_csv(f_name+"_item_sheet.csv", index=False)
+st.download_button(
+   label = "Download Items CSV",
+   data = final_df.to_csv(index=False),
+   file_name = f_name+"_item_sheet.csv",
+   mime = "text/csv",
+   key='download-csv'
+)
+
+# if st.button('Download Items CSV'):
+#     final_df.to_csv(f_name+"_item_sheet.csv", index=False)
 
 
