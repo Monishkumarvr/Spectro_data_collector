@@ -88,39 +88,43 @@ except:
 
 st.dataframe(final_df)
 
-ino_qty = False
-if not ino_qty:
+ino_qty = None
+
+if 'ino_qty' not in st.session_state:
+    st.session_state['ino_qty'] = False
+
+if st.session_state["ino_qty"] == False:
     st.download_button(
         label = "Download Items CSV",
         data = final_df.to_csv(index=False),
         file_name = f_name+"_item_sheet.csv",
         mime = "text/csv",
-        key='download-csv'
+        key='download-csv1'
         )
 
 try:
-    if "LADLE"in final_df['Type'].values:
+    if "LADLE" in final_df['Type'].values:
+        st.session_state['ino_qty'] = True
         ino_qty = st.text_input("Inoculant qty")
 except:
     pass
 
-if not ino_qty:
-    st.stop()
+# if not st.session_state["ino_qty"] == False:
+#     st.stop()
 
-
-if ino_qty:
-    print(ino_qty)
+if st.session_state['ino_qty']:
     final_df.loc[final_df['Type'] == 'LADLE', 'Min'] = ino_qty
     final_df.loc[final_df['Type'] == 'LADLE', 'Max'] = ino_qty
 
 
-st.download_button(
-   label = "Download Items CSV",
-   data = final_df.to_csv(index=False),
-   file_name = f_name+"_item_sheet.csv",
-   mime = "text/csv",
-   key='download-csv'
-)
+if st.session_state["ino_qty"] == True:
+    st.download_button(
+        label = "Download Items CSV",
+        data = final_df.to_csv(index=False),
+        file_name = f_name+"_item_sheet.csv",
+        mime = "text/csv",
+        key='download-csv2'
+        )
 
 # if st.button('Download Items CSV'):
 #     final_df.to_csv(f_name+"_item_sheet.csv", index=False)
