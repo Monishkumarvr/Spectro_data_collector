@@ -18,8 +18,9 @@ st.set_page_config(page_title="My dashboard", layout="wide", initial_sidebar_sta
 f_name = st.text_input("Enter the foundry name")
 f_name = f_name.split()
 f_name = '_'.join(f_name)
-print(f_name)
-#st.dataframe(data=df2, width=None, height=None)
+
+if not f_name:
+    st.stop()
 
 gd = GridOptionsBuilder.from_dataframe(df)
 gd.configure_selection(selection_mode='multiple', use_checkbox=True)
