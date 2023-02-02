@@ -16,6 +16,9 @@ df.fillna(0, inplace = True)
 st.set_page_config(page_title="My dashboard", layout="wide", initial_sidebar_state="expanded")
 
 f_name = st.text_input("Enter the foundry name")
+f_name = f_name.split()
+f_name = '_'.join(f_name)
+print(f_name)
 #st.dataframe(data=df2, width=None, height=None)
 
 gd = GridOptionsBuilder.from_dataframe(df)
@@ -85,6 +88,15 @@ except:
 st.dataframe(final_df)
 
 ino_qty = False
+if not ino_qty:
+    st.download_button(
+        label = "Download Items CSV",
+        data = final_df.to_csv(index=False),
+        file_name = f_name+"_item_sheet.csv",
+        mime = "text/csv",
+        key='download-csv'
+        )
+
 try:
     if "LADLE"in final_df['Type'].values:
         ino_qty = st.text_input("Inoculant qty")
@@ -93,6 +105,7 @@ except:
 
 if not ino_qty:
     st.stop()
+
 
 if ino_qty:
     print(ino_qty)
