@@ -51,6 +51,9 @@ formatter = {
     'Mo': ('Mo', {'width': 30, 'editable': True}),
 }
 
+note = '<p style="font-family:Courier; color:Blue; font-size: 20px;">Note : Ensure to enter the inoculant quantity incase of inoculant item selected</p>'
+st.markdown(note, unsafe_allow_html = True)
+#st.markdown("#### Note : Ensure to enter the inoculant quantity incase of inoculant item selected")
 st.write('## Items Selection list')
 grid_table = draw_grid(
     df,
