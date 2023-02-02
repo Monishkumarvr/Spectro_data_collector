@@ -13,6 +13,10 @@ df = pd.read_csv(url)
 df.drop(['Yield', 'Price', 'Size'], axis = 1, inplace = True)
 df.fillna(0, inplace = True)
 
+df.insert(loc = 2, column = "Metal RR", value = 100)
+df.insert(loc = 3, column = "Min", value = None)
+df.insert(loc = 4, column = "Max", value = None)
+
 st.set_page_config(page_title="My dashboard", layout="wide", initial_sidebar_state="expanded")
 
 f_name = st.text_input("Enter the foundry name")
@@ -30,9 +34,9 @@ gridoptions = gd.build()
 formatter = {
     'Item Name': ('Item Name', {'width': 80, 'editable': True}),
     'Type': ('Type', {'width': 50, 'editable': True}),
-    # 'Metal RR': ('Metal RR', {'width': 40}),
-    # 'Min': ('Min', {'width': 30}),
-    # 'Max': ('Max', {'width': 30}),
+    'Metal RR': ('Metal RR', {'width': 40, 'editable': True}),
+    'Min': ('Min', {'width': 30, 'editable': True}),
+    'Max': ('Max', {'width': 30, 'editable': True}),
     'C': ('C', {'width': 30, 'editable': True}),
     'Si': ('Si', {'width': 30, 'editable': True}),
     'Mn': ('Mn', {'width': 30, 'editable': True}),
@@ -80,53 +84,21 @@ for i in range(len(selected_row)):
 final_df = pd.DataFrame(selected_row)
 
 try:
-    final_df.insert(loc = 2, column = "Metal RR", value = 100)
-    final_df.insert(loc = 3, column = "Min", value = None)
-    final_df.insert(loc = 4, column = "Max", value = None)
+    final_df['Min'] = final_df['Min'].replace([0.0000], [None])
+    final_df['Max'] = final_df['Max'].replace([0.0000], [None])
 except:
     pass
+
 
 st.dataframe(final_df)
 
-ino_qty = None
+st.download_button(
+    label = "Download Items CSV",
+    data = final_df.to_csv(index=False),
+    file_name = f_name+"_item_sheet.csv",
+    mime = "text/csv",
+    key='download-csv2'
+    )
 
-if 'ino_qty' not in st.session_state:
-    st.session_state['ino_qty'] = False
-
-if st.session_state["ino_qty"] == False:
-    st.download_button(
-        label = "Download Items CSV",
-        data = final_df.to_csv(index=False),
-        file_name = f_name+"_item_sheet.csv",
-        mime = "text/csv",
-        key='download-csv1'
-        )
-
-try:
-    if "LADLE" in final_df['Type'].values:
-        st.session_state['ino_qty'] = True
-        ino_qty = st.text_input("Inoculant qty")
-except:
-    pass
-
-# if not st.session_state["ino_qty"] == False:
-#     st.stop()
-
-if st.session_state['ino_qty']:
-    final_df.loc[final_df['Type'] == 'LADLE', 'Min'] = ino_qty
-    final_df.loc[final_df['Type'] == 'LADLE', 'Max'] = ino_qty
-
-
-if st.session_state["ino_qty"] == True:
-    st.download_button(
-        label = "Download Items CSV",
-        data = final_df.to_csv(index=False),
-        file_name = f_name+"_item_sheet.csv",
-        mime = "text/csv",
-        key='download-csv2'
-        )
-
-# if st.button('Download Items CSV'):
-#     final_df.to_csv(f_name+"_item_sheet.csv", index=False)
 
 
